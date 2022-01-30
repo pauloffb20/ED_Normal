@@ -294,7 +294,57 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
         return weightMatrix;
     }
 
+    public double getEdgeWeight(int vertex1, int vertex2) {
 
+        return this.weightMatrix[vertex1][vertex2];
+    }
+
+    public double shortestPathWeight(T sourceVertex, T targetVertex, ArrayUnorderedList<T> result) throws EmptyException {
+        ArrayUnorderedList<MinCostPair> paths = new ArrayUnorderedList<>();
+        ArrayUnorderedList<Integer> visited = new ArrayUnorderedList<>();
+        int srcVertex = super.getIndex(sourceVertex);
+        int destVertex = super.getIndex(targetVertex);
+
+        MinCostPair initialPair = new MinCostPair(srcVertex, 0);
+        initialPair.path.addToRear(srcVertex);
+        paths.addToFront(initialPair);
+
+        while (!paths.isEmpty()) {
+            int currentVertex = 0;
+            for(int i=0;i<paths.size();i++){
+                if(paths.getIndex(i).getIndex() == destVertex){
+                    currentVertex = paths.getIndex(i).getIndex();
+                }else if(!visited.contains(paths.getIndex(i).getIndex())){
+                    currentVertex = paths.getIndex(i).getIndex();
+                }
+            }
+
+            MinCostPair currentPair = paths.last();
+
+            double minCostCurrent = currentPair.getCost();
+            visited.addToRear(currentVertex);
+
+            if (currentVertex == destVertex) {
+                for (int i : currentPair.path)
+                    result.addToRear(vertices[i]);
+
+                return minCostCurrent;
+            }
+
+            for (int i = 0; i < this.size(); i++)
+                if (adjMatrix[currentVertex][i] && !visited.contains(i)) {
+                    double newPathCost = minCostCurrent + getEdgeWeight(currentVertex, i);
+                    MinCostPair newPathPair = new MinCostPair(i, newPathCost);
+
+                    for (int v : currentPair.path)
+                        newPathPair.path.addToRear(v);
+
+                    newPathPair.path.addToRear(i);
+                    paths.addToRear(newPathPair);
+                }
+        }
+        return -1;
+    }
 
 
 
