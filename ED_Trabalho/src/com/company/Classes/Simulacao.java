@@ -163,7 +163,7 @@ public class Simulacao {
         int weightfinal = -1;
         Armazem armazemfinal = null;
         Object[] locais = localNetwork.getVertices();
-        ArrayUnorderedList<LocalX> pathTemp = new ArrayUnorderedList<>();
+
         for (int i = 0; i < locais.length; i++) {
             LocalX local = (LocalX) locais[i];
             if (local == null) {
@@ -172,6 +172,7 @@ public class Simulacao {
             if (local.getType().equals("Armazém")) {
                 Armazem armazem = (Armazem) local;
                 if (armazem.getStock() != 0) {
+                    ArrayUnorderedList<LocalX> pathTemp = new ArrayUnorderedList<>();
                     localNetwork.shortestPathWeight(paths.getIndex(index).getPaths().last(), armazem, pathTemp);
                     int weighttemp = getPathWeight(pathTemp);
                     if (weightfinal == -1) {

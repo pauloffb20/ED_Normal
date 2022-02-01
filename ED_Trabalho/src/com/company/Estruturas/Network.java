@@ -299,28 +299,22 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
         return this.weightMatrix[vertex1][vertex2];
     }
 
+
+
+
     public double shortestPathWeight(T sourceVertex, T targetVertex, ArrayUnorderedList<T> result) throws EmptyException {
-        ArrayUnorderedList<MinCostPair> paths = new ArrayUnorderedList<>();
-        ArrayUnorderedList<Integer> visited = new ArrayUnorderedList<>();
-        int srcVertex = super.getIndex(sourceVertex);
-        int destVertex = super.getIndex(targetVertex);
+        ArrayUnorderedList<Prioridade<MinCostPair>> pathsList = new ArrayUnorderedList<>();
+        ArrayUnorderedList<Integer> visited = new ArrayUnorderedList<Integer>();
+        int srcVertex = getIndex(sourceVertex);
+        int destVertex = getIndex(targetVertex);
 
         MinCostPair initialPair = new MinCostPair(srcVertex, 0);
         initialPair.path.addToRear(srcVertex);
-        paths.addToFront(initialPair);
+        pathsList.addToFront(new Prioridade<>(initialPair, 0));
 
-        while (!paths.isEmpty()) {
-            int currentVertex = 0;
-            for(int i=0;i<paths.size();i++){
-                if(paths.getIndex(i).getIndex() == destVertex){
-                    currentVertex = paths.getIndex(i).getIndex();
-                }else if(!visited.contains(paths.getIndex(i).getIndex())){
-                    currentVertex = paths.getIndex(i).getIndex();
-                }
-            }
-
-            MinCostPair currentPair = paths.last();
-
+        while (!pathsList.isEmpty()) {
+            MinCostPair currentPair = removeMin(pathsList);
+            int currentVertex = currentPair.getIndex();
             double minCostCurrent = currentPair.getCost();
             visited.addToRear(currentVertex);
 
@@ -340,12 +334,24 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
                         newPathPair.path.addToRear(v);
 
                     newPathPair.path.addToRear(i);
-                    paths.addToRear(newPathPair);
+                    pathsList.addToRear(new Prioridade<>(newPathPair, newPathCost));
                 }
         }
         return -1;
     }
 
+    private MinCostPair removeMin(ArrayUnorderedList<Prioridade<MinCostPair>> pathsList) throws EmptyException {
+        int index = 0,prioridade = -1;
+        for(int i = 1;i < pathsList.size();i++){
+            if(prioridade == -1){
+                index = i;
+            }else if(pathsList.getIndex(index).getPrioridade() > pathsList.getIndex(i).getPrioridade()){
+                index = i;
+            }
+        }
+
+        return pathsList.removeByIndex(index).getObject();
+    }
 
 
 }
