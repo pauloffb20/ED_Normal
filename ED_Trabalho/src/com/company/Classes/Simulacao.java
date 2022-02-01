@@ -18,29 +18,29 @@ public class Simulacao {
         this.paths = new ArrayUnorderedList<>();
     }
 
-    public void simulate(Vendedor vendedor) throws EmptyException, InvalidIndexException {
+    public void simulate(Vendedor vendedor) throws EmptyException {
         if (!verification(vendedor)) {
             paths.addToRear(new Path(localNetwork, vendedor));
         }
-        int index = findIndex(vendedor), stock= CalculateTotalStock();
+        int index = findIndex(vendedor);
         iniciarNaSede(index);
         boolean work;
 
         do {
+            int stock= calculateTotalStock();
             int carregamento = calculateClientNeeds(vendedor);
             if(carregamento> stock){
                 System.out.println("Stock insufeciente");
+                returnBase(index,vendedor);
                 return;
             }
-            FindPathToArmazem(carregamento, index);
-            work = FindPathToMercado(vendedor, index, carregamento);
-        }while (work);
-        if (paths.getIndex(index).getPaths().size() != 0) {
-            LocalX local = findLocalType("Sede");
-            if (paths.getIndex(findIndex(vendedor)).getPaths().last() !=local) {
-                paths.getIndex(findIndex(vendedor)).getPaths().addToRear(local);
+            work = findPathToArmazem(carregamento, index);
+            if(work) {
+                findPathToMercado(vendedor, index, carregamento);
             }
-        }
+        }while (work);
+        returnBase(index,vendedor);
+
         for(int i=0; i<paths.getIndex(findIndex(vendedor)).getPaths().size();i++){
             System.out.println(paths.getIndex(findIndex(vendedor)).getPaths().getIndex(i).getLocal_name());
         }
@@ -133,11 +133,11 @@ public class Simulacao {
         return null;
     }
 
-    private boolean FindPathToArmazem(int total, int index) throws EmptyException, InvalidIndexException {
-        if (total != 0) {
+    private boolean findPathToArmazem(int total, int index) throws EmptyException {
+        if (total > 0) {
             boolean done = true;
             do {
-                Armazem armazemfinal = FindCorrectArmazem(index);
+                Armazem armazemfinal = findCorrectArmazem(index);
                 if (armazemfinal == null) {
                     return false;
                 }
@@ -153,11 +153,13 @@ public class Simulacao {
                     done=false;
                 }
             }while (done);
+        }else{
+            return false;
         }
         return true;
     }
 
-    private Armazem FindCorrectArmazem(int index) throws EmptyException {
+    private Armazem findCorrectArmazem(int index) throws EmptyException {
         int weightfinal = -1;
         Armazem armazemfinal = null;
         Object[] locais = localNetwork.getVertices();
@@ -196,27 +198,22 @@ public class Simulacao {
         return weight;
     }
 
-    private boolean FindPathToMercado(Vendedor vendedor,int index,int total) throws EmptyException {
+    private void findPathToMercado(Vendedor vendedor,int index,int total) throws EmptyException {
         Mercado mercado = checkMercado(vendedor);
-        if(mercado == null){
-            return false;
-        }
         LocalX path = paths.getIndex(index).getPaths().last();
         int u = findIndexLocal(path);
         localNetwork.shortestPathWeight(paths.getIndex(index).getPaths().last(), mercado, paths.getIndex(index).getPaths());
         paths.getIndex(index).getPaths().removeByIndex(u);
+
         while (total != 0){
             total -= mercado.getClientes().first();
             mercado.getClientes().removeFirst();
         }
-
-        return true;
     }
 
-    private int CalculateTotalStock() {
+    private int calculateTotalStock() {
         int total = 0;
         Object[] locais = localNetwork.getVertices();
-        ArrayUnorderedList<LocalX> pathTemp = new ArrayUnorderedList<>();
         for (int i = 0; i < locais.length; i++) {
             LocalX local = (LocalX) locais[i];
             if (local == null) {
@@ -228,6 +225,15 @@ public class Simulacao {
             }
         }
         return total;
+    }
+
+    private void returnBase(int index,Vendedor vendedor) throws EmptyException {
+        if (paths.getIndex(index).getPaths().size() != 0) {
+            LocalX local = findLocalType("Sede");
+            if (paths.getIndex(findIndex(vendedor)).getPaths().last() != local) {
+                localNetwork.shortestPathWeight(paths.getIndex(index).getPaths().last(), local, paths.getIndex(index).getPaths());
+            }
+        }
     }
 
 }
