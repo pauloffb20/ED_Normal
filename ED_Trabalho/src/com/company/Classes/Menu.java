@@ -17,6 +17,7 @@ public class Menu {
     private GestãoArmazem gestãoArmazem;
     private GestaoMercados gestaoMercados;
     private GestaoCaminhos gestaoCaminhos;
+    private Simulacao simulacao;
 
     public Menu() {
         this.gestaoEmpresa = new GestaoEmpresa();
@@ -26,6 +27,7 @@ public class Menu {
         this.gestãoArmazem = new GestãoArmazem(gestaoEmpresa.getNetworkX());
         this.gestaoMercados = new GestaoMercados(gestaoEmpresa.getNetworkX());
         this.gestaoCaminhos = new GestaoCaminhos(gestaoEmpresa);
+        this.simulacao = new Simulacao(gestaoEmpresa.getNetworkX());
     }
 
     public void run() throws IOException, InvalidIndexException, EmptyException, NotFoundException, ParseException, NoComparableException, EmptyCollectionException, org.json.simple.parser.ParseException {
@@ -42,28 +44,19 @@ public class Menu {
                     System.out.println(gestaoEmpresa.toString());
                     break;
                 case 3:
-                    gestaoVendedores.changeSeller();
+                    alterarDados();
                     break;
                 case 4:
-                    exports();
-                    break;
-                case 5:
-                    gestaoVendedores.addSeller();
-                    break;
-                case 6:
-                    printGraph();
-                    break;
-                case 7:
-                    gestaoEmpresa.AddOrSetStorage();
-                    break;
-                case 8:
-                    gestaoEmpresa.AddOrSetMarkets();
-                    break;
-                case 9:
                     gestaoEmpresa.seeMarketsOrStorages();
                     break;
-                case 10:
-                    gestaoCaminhos.pathMenu();
+                case 5:
+                    printGraph();
+                    break;
+                case 6:
+                    menuSimulacao();
+                    break;
+                case 7:
+                    exports();
                     break;
                 default:
             }
@@ -86,7 +79,7 @@ public class Menu {
         int counter = 1;
         System.out.println("Choose a file");
 
-        File[] files = new File("src/Documents").listFiles();
+        File[] files = new File("ED_Trabalho/src/Documents").listFiles();
 
         for (File file : files) {
             if (file.isFile()) {
@@ -111,16 +104,13 @@ public class Menu {
         String choice;
             System.out.println("Escolha uma das opções:");
             System.out.println("-------------------------\n");
-            System.out.println("1 - Importar documento"); //funcional!!
-            System.out.println("2 - Ver info da empresa"); //colocar caminhos
-            System.out.println("3 - Atualizar vendedor ou atribuir lista"); //funcional!!
-            System.out.println("4 - Exports"); //funcional vendedores!! ver melhor empresa, storages e mercados
-            System.out.println("5 - Adicionar vendedor"); //funcional!!
-            System.out.println("6 - Mostrar Network"); // funcional!!
-            System.out.println("7 - Adicionar ou alterar Armazém"); //funcional!!
-            System.out.println("8 - Adicionar ou alterar mercado"); // funcional!!
-            System.out.println("9- Ver mercados ,armazéns ou vendedores");// funcional!!
-            System.out.println("10- Adicionar,remover ou listar caminhos"); // checar melhor esta classe
+            System.out.println("1 - Importar documento");
+            System.out.println("2 - Ver info da empresa");
+            System.out.println("3 - Atualizar/adicionar dados");
+            System.out.println("4 - Ver mercados ,armazéns ou vendedores");
+            System.out.println("5 - Mostrar Network");
+            System.out.println("6- Simulação de trajeto(s)");
+            System.out.println("7 - Exports");
             choice = input.next();
         return Integer.valueOf(choice);
     }
@@ -131,6 +121,73 @@ public class Menu {
         Iterator<LocalX> i = network.iteratorBFS(0);
         while(i.hasNext()){
             System.out.println(i.next());
+        }
+    }
+
+    public void alterarDados() throws EmptyException, IOException, NotFoundException, NoComparableException {
+        int choice;
+        System.out.println("Qual item quer alterar/adicionar?");
+        System.out.println("1- Caminhos");
+        System.out.println("2- Vendedores");
+        System.out.println("3- Armazéns");
+        System.out.println("4- Mercados");
+        Scanner input = new Scanner(System.in);
+        choice = Integer.parseInt(input.next());
+        while (choice != 5) {
+            switch (choice) {
+                case 1:
+                    gestaoCaminhos.pathMenu();
+                    choice = 5;
+                    break;
+                case 2:
+                    gestaoVendedores.sellerMenu();
+                    choice = 5;
+                    break;
+                case 3:
+                    gestaoEmpresa.AddOrSetStorage();
+                    choice = 5;
+                    break;
+                case 4:
+                    gestaoEmpresa.AddOrSetMarkets();
+                    choice = 5;
+                    break;
+                default:
+                    return;
+            }
+        }
+    }
+
+    public void menuSimulacao() throws EmptyException {
+        int choice, choice2;
+        System.out.println("Simulação de trajeto");
+        System.out.println("1- Escolha do vendedor");
+        System.out.println("2- Todos vendedores");
+        System.out.println("3- Ver caminhos");
+        Scanner input = new Scanner(System.in);
+        choice = Integer.parseInt(input.next());
+        while (choice != 5) {
+            switch (choice) {
+                case 1:
+                    System.out.println("Escolha um vendedor:");
+                    gestor.printSellers();
+                    Scanner input2 = new Scanner(System.in);
+                    choice2 = Integer.parseInt(input2.next());
+                    ArrayUnorderedList<Vendedor> vendedores = gestaoEmpresa.getVendedors();
+                    Vendedor vendedor = vendedores.getIndex(choice2);
+                    simulacao.simulate(vendedor);
+                    choice = 5;
+                    break;
+                case 2:
+                    simulacao.simulateAll(gestaoEmpresa.getVendedors());
+                    choice = 5;
+                    break;
+                case 3:
+                    simulacao.printAll();
+                    choice = 5;
+                    break;
+                default:
+                    return;
+            }
         }
     }
 

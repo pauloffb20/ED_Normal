@@ -18,9 +18,15 @@ public class Simulacao {
         this.paths = new ArrayUnorderedList<>();
     }
 
+    public void simulateAll(ArrayUnorderedList<Vendedor> vendedores) throws EmptyException {
+        for(int i = 0; i < vendedores.size(); i++){
+            simulate(vendedores.getIndex(i));
+        }
+    }
+
     public void simulate(Vendedor vendedor) throws EmptyException {
         if (!verification(vendedor)) {
-            paths.addToRear(new Path(localNetwork, vendedor));
+            paths.addToRear(new Path(vendedor));
         }
         int index = findIndex(vendedor);
         iniciarNaSede(index);
@@ -40,12 +46,6 @@ public class Simulacao {
             }
         }while (work);
         returnBase(index,vendedor);
-
-        for(int i=0; i<paths.getIndex(findIndex(vendedor)).getPaths().size();i++){
-            System.out.println(paths.getIndex(findIndex(vendedor)).getPaths().getIndex(i).getLocal_name());
-        }
-
-
     }
 
     private boolean verification(Vendedor vendedor) {
@@ -142,7 +142,7 @@ public class Simulacao {
                     return false;
                 }
                 LocalX path = paths.getIndex(index).getPaths().last();
-                int u = findIndexLocal(path);
+                int u = paths.getIndex(index).getPaths().size() - 1;
                 localNetwork.shortestPathWeight(paths.getIndex(index).getPaths().last(), armazemfinal, paths.getIndex(index).getPaths());
                 paths.getIndex(index).getPaths().removeByIndex(u);
                 if (armazemfinal.getStock() - total < 0) {
@@ -201,7 +201,7 @@ public class Simulacao {
     private void findPathToMercado(Vendedor vendedor,int index,int total) throws EmptyException {
         Mercado mercado = checkMercado(vendedor);
         LocalX path = paths.getIndex(index).getPaths().last();
-        int u = findIndexLocal(path);
+        int u = paths.getIndex(index).getPaths().size() - 1;
         localNetwork.shortestPathWeight(paths.getIndex(index).getPaths().last(), mercado, paths.getIndex(index).getPaths());
         paths.getIndex(index).getPaths().removeByIndex(u);
 
@@ -231,9 +231,21 @@ public class Simulacao {
         if (paths.getIndex(index).getPaths().size() != 0) {
             LocalX local = findLocalType("Sede");
             if (paths.getIndex(findIndex(vendedor)).getPaths().last() != local) {
+                LocalX path = paths.getIndex(index).getPaths().last();
+                int u = paths.getIndex(index).getPaths().size() - 1;
                 localNetwork.shortestPathWeight(paths.getIndex(index).getPaths().last(), local, paths.getIndex(index).getPaths());
+                paths.getIndex(index).getPaths().removeByIndex(u);
             }
         }
     }
 
+    public void printAll(){
+        for(int i = 0; i < paths.size(); i++){
+            System.out.println(paths.getIndex(i).getVendedor().getNome());
+            for(int j=0; j<paths.getIndex(i).getPaths().size();j++){
+                System.out.println(paths.getIndex(i).getPaths().getIndex(j).getLocal_name());
+            }
+            System.out.println("*--------------------------*");
+        }
+    }
 }

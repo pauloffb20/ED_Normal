@@ -11,8 +11,8 @@ public class Writter {
     Gson gson = new Gson();
      private GestaoEmpresa gestaoEmpresa;
      private Gestor gestor;
-     private String fileNamePath  = "src/Documents/vendedores.json",
-            storagePath = "src/Documents/Storage.json", enterprise = "src/Documents/enterprise.json", marketPath = "src/Documents/Market.json";
+     private String fileNamePath  = "ED_Trabalho/src/com/company/Exports/vendedores.json",
+            storagePath = "ED_Trabalho/src/com/company/Exports/Storage.json", enterprise = "ED_Trabalho/src/com/company/Exports/enterprise.json", marketPath = "ED_Trabalho/src/com/company/Exports/Market.json";
 
      public Writter(){ }
 

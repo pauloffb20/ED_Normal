@@ -80,6 +80,31 @@ public class GestaoVendedores {
         gestaoEmpresa.addVendedor(vendedor);
     }
 
+
+    public void sellerMenu() throws NoComparableException {
+        int choice;
+        System.out.println("O que deseja fazer?");
+        System.out.println("1- Adicionar vendedor");
+        System.out.println("2- Alterar vendedor");
+        System.out.println("3- Exit");
+        Scanner input = new Scanner(System.in);
+        choice = Integer.parseInt(input.next());
+        while (choice != 3) {
+            switch (choice) {
+                case 1:
+                    addSeller();
+                    choice= 3;
+                    break;
+                case 2:
+                    changeSeller();
+                    choice=3;
+                    break;
+                default:
+                    return;
+            }
+        }
+    }
+
     public void exportUser() throws IOException {
         int sellectUser;
         Scanner input = new Scanner(System.in);

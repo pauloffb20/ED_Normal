@@ -1,0 +1,14 @@
+{
+  "nome": "Vendedor 1",
+  "id": 1,
+  "capacidade": 250,
+  "mercados": {
+    "list": [
+      "Mercado 1",
+      "...",
+      null,
+      null,
+      null
+    ]
+  }
+}

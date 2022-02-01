@@ -7,12 +7,10 @@ import com.company.Models.LocalX;
 import com.company.Models.Vendedor;
 
 public class Path {
-    private Network<LocalX> localNetwork;
     private Vendedor vendedor;
     private ArrayUnorderedList<LocalX> paths;
 
-    public Path(Network<LocalX> network,Vendedor vendedor){
-        this.localNetwork = network;
+    public Path(Vendedor vendedor){
         this.vendedor = vendedor;
         this.paths = new ArrayUnorderedList<>();
     }
@@ -25,8 +23,5 @@ public class Path {
         return paths;
     }
 
-    public void addPaths(LocalX path) {
-        this.paths.addToRear(path);
-    }
 
 }
