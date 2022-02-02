@@ -21,30 +21,58 @@ public class Caminho {
 
     }
 
+    /**
+     * Método para obter distancia entre dois pontos
+     * @return distancia
+     */
     public double getDistancia() {
         return distancia;
     }
 
+    /**
+     * Método para obter o ponto de saida(de)
+     * @return de
+     */
     public String getDe() {
         return de;
     }
 
+    /**
+     * Método para obter o ponto de destino
+     * @return para
+     */
     public String getPara() {
         return para;
     }
 
+    /**
+     * Alterar o ponto inicial do caminho
+     * @param de
+     */
     public void setDe(String de) {
         this.de = de;
     }
 
+    /**
+     * Alterar o ponto de final do caminho
+     * @param para
+     */
     public void setPara(String para) {
         this.para = para;
     }
 
+    /**
+     * Alterar a distancia do caminho
+     * @param distancia
+     */
     public void setDistancia(int distancia) {
         this.distancia = distancia;
     }
 
+    /**
+     * Print do caminho
+     * @return string
+     */
     @Override
     public String toString() {
         return "Caminho{" +

@@ -29,13 +29,27 @@ public class GestaoEmpresa<T> {
         this.gestaoCaminhos = new GestaoCaminhos(networkX);
     }
 
+    /**
+     * Adicionar vendedor á lista
+     * @param m
+     * @throws NoComparableException
+     */
     public void addVendedor(Vendedor m) throws NoComparableException {
         this.vendedores.addToRear(m); }
 
+    /**
+     * Adicionar caminho á lista
+     * @param c
+     */
     public void addCaminho(Caminho c){
         this.paths.addToRear(c);
     }
 
+    /**
+     * Export da empresa
+     * @param gestaoEmpresa
+     * @throws IOException
+     */
     public void exportEnterprise(GestaoEmpresa gestaoEmpresa) throws IOException {
         GestaoEmpresa gestaoEmpresa1 = gestaoEmpresa;
         writter.appendEnterprise(gestaoEmpresa1);
@@ -44,10 +58,21 @@ public class GestaoEmpresa<T> {
         return paths;
     }
 
+    /**
+     * Obter vendedores da empresa
+     * @return vendedores
+     */
     public ArrayUnorderedList<Vendedor> getVendedors() {
         return vendedores;
     }
 
+    /**
+     * Ler o json e preencher empresa com os dados nele contidos
+     * @param path
+     * @throws IOException
+     * @throws ParseException
+     * @throws NoComparableException
+     */
     public void readJson(String path) throws IOException, ParseException, NoComparableException {
         try (FileReader reader = new FileReader(ClassLoader.getSystemResource(path).getFile())) {
             JSONParser jsonParser = new JSONParser();
@@ -56,7 +81,7 @@ public class GestaoEmpresa<T> {
             JSONArray locals = (JSONArray) jsonObject.get("locais");
             JSONArray caminhos = (JSONArray) jsonObject.get("caminhos");
 
-            //Users nao mexer
+            //Users
             Iterator i = lang.iterator();
             while (i.hasNext()) {
                 JSONObject innerObj = (JSONObject) i.next();
@@ -142,10 +167,18 @@ public class GestaoEmpresa<T> {
         }
     }
 
+    /**
+     * Obter a network da empresa
+     * @return networkX
+     */
     public Network<LocalX> getNetworkX(){
         return networkX;
     }
 
+    /**
+     * Print da empresa
+     * @return s
+     */
     @Override
     public String toString() {
         String s = "Vendedores:\n";
@@ -167,32 +200,52 @@ public class GestaoEmpresa<T> {
         return s;
     }
 
+    /**
+     * Método para chamar o menu de armazem
+     */
     public void AddOrSetStorage() {
         GestãoArmazem gestãoArmazem = new GestãoArmazem(networkX);
         gestãoArmazem.AddOrSetStorage();
     }
 
+    /**
+     * Método para chamar menu de mercado
+     */
     public void AddOrSetMarkets() {
         GestaoMercados gestaoMercados = new GestaoMercados(networkX);
         gestaoMercados.AddOrSetMarkets();
     }
 
+    /**
+     * Método para print de mercados
+     */
     public void printMarkets(){
         GestaoMercados gestaoMercados = new GestaoMercados(networkX);
         gestaoMercados.printMarketsToShow();
     }
 
+    /**
+     * Método para print dos armazens
+     */
     public void printStorages(){
         GestãoArmazem gestãoArmazem = new GestãoArmazem(networkX);
         gestãoArmazem.printStoragesToShow();
     }
 
+    /**
+     * Método para adicionar um caminho na lista e network
+     */
     public void addEdge(){
         GestaoCaminhos gestaoCaminhos = new GestaoCaminhos(networkX);
         Caminho caminho = gestaoCaminhos.addEdge();
         paths.addToRear(caminho);
     }
 
+    /**
+     * Método para remover um caminho da lista e da network
+     * @throws EmptyException
+     * @throws NotFoundException
+     */
     public void removeEdge() throws EmptyException, NotFoundException {
         GestaoCaminhos gestaoCaminhos = new GestaoCaminhos(networkX);
         Caminho caminho = gestaoCaminhos.removeEdge();
@@ -213,6 +266,11 @@ public class GestaoEmpresa<T> {
         }
     }
 
+    /**
+     * Encontrar um local pelo nome
+     * @param nome
+     * @return local ou null caso não exista/encontre
+     */
     public LocalX findLocalByName(String nome){
         Object[] vertices = networkX.vertices;
         for(Object o : vertices){
@@ -224,6 +282,9 @@ public class GestaoEmpresa<T> {
         return null;
     }
 
+    /**
+     * Listagem de mercados, armazens ou vendedores da empresa
+     */
     public void seeMarketsOrStorages(){
         int choice;
         System.out.println("Qual quer ver?");
@@ -252,6 +313,10 @@ public class GestaoEmpresa<T> {
         }
     }
 
+    /**
+     * Print da lista de caminhos
+     * @return
+     */
     public String printPaths(){
         String s = "";
         for (Caminho caminho: paths) {

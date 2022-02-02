@@ -18,12 +18,22 @@ public class Simulacao {
         this.paths = new ArrayUnorderedList<>();
     }
 
+    /**
+     * Método para simular as rotas de uma lista de vendedores
+     * @param vendedores
+     * @throws EmptyException
+     */
     public void simulateAll(ArrayUnorderedList<Vendedor> vendedores) throws EmptyException {
         for(int i = 0; i < vendedores.size(); i++){
             simulate(vendedores.getIndex(i));
         }
     }
 
+    /**
+     * Método para simulação de um vendedor
+     * @param vendedor
+     * @throws EmptyException
+     */
     public void simulate(Vendedor vendedor) throws EmptyException {
         if (!verification(vendedor)) {
             paths.addToRear(new Path(vendedor));
@@ -48,6 +58,11 @@ public class Simulacao {
         returnBase(index,vendedor);
     }
 
+    /**
+     * Verificação se o vendedor ja tem algum Path associado
+     * @param vendedor
+     * @return true caso tenha ou false caso não tenha
+     */
     private boolean verification(Vendedor vendedor) {
         for (int i = 0; i < paths.size(); i++) {
             if (paths.getIndex(i).getVendedor() == vendedor) {
@@ -57,6 +72,11 @@ public class Simulacao {
         return false;
     }
 
+    /**
+     * Encontrar o vendedor na lista de paths
+     * @param vendedor
+     * @return
+     */
     private int findIndex(Vendedor vendedor) {
         for (int i = 0; i < paths.size(); i++) {
             if (paths.getIndex(i).getVendedor() == vendedor) {
@@ -66,6 +86,10 @@ public class Simulacao {
         return -1;
     }
 
+    /**
+     * Método para iniciar trajeto no local que for a sede
+     * @param index
+     */
     private void iniciarNaSede(int index) {
         if (paths.getIndex(index).getPaths().size() == 0) {
             LocalX local = findLocalType("Sede");
@@ -73,6 +97,11 @@ public class Simulacao {
         }
     }
 
+    /**
+     * Encontrar a posição do local
+     * @param local
+     * @return
+     */
     private int findIndexLocal(LocalX local) {
         Object[] locais = localNetwork.getVertices();
         for (int i = 0; i < locais.length; i++) {
@@ -83,6 +112,11 @@ public class Simulacao {
         return -1;
     }
 
+    /**
+     * Encontrar o local pelo tipo
+     * @param tipo
+     * @return
+     */
     private LocalX findLocalType(String tipo) {
         Object[] locais = localNetwork.getVertices();
         for (int i = 0; i < locais.length; i++) {
@@ -94,6 +128,11 @@ public class Simulacao {
         return null;
     }
 
+    /**
+     * Calcular quanto stock ele precisa para atender os clientes
+     * @param vendedor
+     * @return
+     */
     private int calculateClientNeeds(Vendedor vendedor) {
         Mercado mercado = checkMercado(vendedor);
         if(mercado != null) {
@@ -110,6 +149,11 @@ public class Simulacao {
         return 0;
     }
 
+    /**
+     * Verificar se o mercado na lista de mercados do vendedor existe e se tem clientes
+     * @param vendedor
+     * @return mercado ou null caso nao exista
+     */
     private Mercado checkMercado(Vendedor vendedor) {
         Object[] locais = localNetwork.getVertices();
         for (int j = 0; j < vendedor.getMercados().size(); j++) {
@@ -133,6 +177,13 @@ public class Simulacao {
         return null;
     }
 
+    /**
+     * Encontrar o melhor caminho para o armazém correto e colocar na lista
+     * @param total
+     * @param index
+     * @return
+     * @throws EmptyException
+     */
     private boolean findPathToArmazem(int total, int index) throws EmptyException {
         if (total > 0) {
             boolean done = true;
@@ -159,6 +210,12 @@ public class Simulacao {
         return true;
     }
 
+    /**
+     * Encontrar o armazém mais proximo que tenha stock maior que 0
+     * @param index
+     * @return armazemfinal
+     * @throws EmptyException
+     */
     private Armazem findCorrectArmazem(int index) throws EmptyException {
         int weightfinal = -1;
         Armazem armazemfinal = null;
@@ -188,7 +245,12 @@ public class Simulacao {
         return armazemfinal;
     }
 
-
+    /**
+     * Soma as distancias entre cada dois pontos ate chegar ao armazem
+     * @param pathTemp
+     * @return weight
+     * @throws EmptyException
+     */
     private int getPathWeight(ArrayUnorderedList<LocalX> pathTemp) throws EmptyException {
         int weight = 0;
         for (int i=0; i < pathTemp.size();i++){
@@ -199,6 +261,14 @@ public class Simulacao {
         return weight;
     }
 
+    /**
+     * Encontrar o melhor caminho para o mercado desejado, depois de encontrado
+     * removemos os clientes por ordem após servidos
+     * @param vendedor
+     * @param index
+     * @param total
+     * @throws EmptyException
+     */
     private void findPathToMercado(Vendedor vendedor,int index,int total) throws EmptyException {
         Mercado mercado = checkMercado(vendedor);
         LocalX path = paths.getIndex(index).getPaths().last();
@@ -212,6 +282,10 @@ public class Simulacao {
         }
     }
 
+    /**
+     * Calcular o total de stock que existe nos armazéns
+     * @return total
+     */
     private int calculateTotalStock() {
         int total = 0;
         Object[] locais = localNetwork.getVertices();
@@ -228,6 +302,13 @@ public class Simulacao {
         return total;
     }
 
+
+    /**
+     * Método para retornar á sede
+     * @param index
+     * @param vendedor
+     * @throws EmptyException
+     */
     private void returnBase(int index,Vendedor vendedor) throws EmptyException {
         if (paths.getIndex(index).getPaths().size() != 0) {
             LocalX local = findLocalType("Sede");
@@ -240,6 +321,9 @@ public class Simulacao {
         }
     }
 
+    /**
+     * Print de todas as rotas
+     */
     public void printAll(){
         for(int i = 0; i < paths.size(); i++){
             System.out.println(paths.getIndex(i).getVendedor().getNome());

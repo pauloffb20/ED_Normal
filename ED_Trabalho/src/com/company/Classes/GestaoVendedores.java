@@ -19,6 +19,9 @@ public class GestaoVendedores {
         this.writter = new Writter(gestaoEmpresa);
     }
 
+    /**
+     * Método para alterar um atributo do vendedor
+     */
     public void changeSeller() {
         int sellectSeller = 0 , sellectAtribut = 0;
         ArrayUnorderedList<Vendedor> vendedores = gestaoEmpresa.getVendedors();
@@ -44,6 +47,10 @@ public class GestaoVendedores {
         }
     }
 
+    /**
+     * Método para adicionar vendedor
+     * @throws NoComparableException
+     */
     public void addSeller() throws NoComparableException {
         Vendedor vendedor;
         String nome;
@@ -80,7 +87,10 @@ public class GestaoVendedores {
         gestaoEmpresa.addVendedor(vendedor);
     }
 
-
+    /**
+     * Menu de vendedor
+     * @throws NoComparableException
+     */
     public void sellerMenu() throws NoComparableException {
         int choice;
         System.out.println("O que deseja fazer?");
@@ -105,6 +115,10 @@ public class GestaoVendedores {
         }
     }
 
+    /**
+     * Export de um vendedor escolhido
+     * @throws IOException
+     */
     public void exportUser() throws IOException {
         int sellectUser;
         Scanner input = new Scanner(System.in);

@@ -15,10 +15,18 @@ public class Path {
         this.paths = new ArrayUnorderedList<>();
     }
 
+    /**
+     *  Método para obter o vendedor do path
+     * @return vendedor
+     */
     public Vendedor getVendedor() {
         return vendedor;
     }
 
+    /**
+     * Método para obter a lista de locais
+     * @return paths
+     */
     public ArrayUnorderedList<LocalX> getPaths() {
         return paths;
     }

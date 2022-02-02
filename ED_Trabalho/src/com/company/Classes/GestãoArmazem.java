@@ -18,6 +18,9 @@ public class GestãoArmazem {
         this.writter = new Writter();
     }
 
+    /**
+     * Print dos armazens na network com respetivo index
+     */
     public void printStorages() {
         Object[] locais = network.getVertices();
 
@@ -29,6 +32,9 @@ public class GestãoArmazem {
         }
     }
 
+    /**
+     * Print dos armazens na network
+     */
     public void printStoragesToShow() {
         Object[] locais = network.getVertices();
         for (int i = 0; i < network.size(); i++) {
@@ -39,6 +45,9 @@ public class GestãoArmazem {
         }
     }
 
+    /**
+     * Método para alterar um armazem
+     */
     public void setStorage(){
         Object[] locais = network.getVertices();
         int choice, choice2, choice3, choice4;
@@ -95,6 +104,9 @@ public class GestãoArmazem {
         }
     }
 
+    /**
+     * Método para adicionar um armazem
+     */
     public void addStorage(){
         int cap, stock;
         String name, tipo = "Armazém";
@@ -121,6 +133,9 @@ public class GestãoArmazem {
         network.addVertex(novoarmazem);
     }
 
+    /**
+     * Menu de armazém
+     */
     public void AddOrSetStorage() {
         int menu;
         Object[] locais = network.getVertices();
@@ -157,6 +172,10 @@ public class GestãoArmazem {
         }
     }
 
+    /**
+     * Export de um armazem escolhido
+     * @throws IOException
+     */
     public void exportArmazem() throws IOException {
         int sellectStorage;
         Object[] locais = network.getVertices();

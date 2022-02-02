@@ -6,7 +6,10 @@ public class Sede extends LocalX{
         super(name, tipo);
     }
 
-
+    /**
+     * print da sede
+     * @return string
+     */
     @Override
     public String toString() {
         return super.toString();

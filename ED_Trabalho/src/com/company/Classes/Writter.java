@@ -21,6 +21,11 @@ public class Writter {
         this.gestor = new Gestor(gestaoEmpresa.getVendedors());
     }
 
+    /**
+     * Escrever no ficheiro o dados da empresa
+     * @param p
+     * @throws IOException
+     */
     public void appendEnterprise(GestaoEmpresa p) throws IOException {
         GestaoEmpresa gestaoEmpresa = p;
         String s = gestaoEmpresa.toString();
@@ -33,6 +38,11 @@ public class Writter {
         writer.close();
     }
 
+    /**
+     * Escrever o vendedor escolhido no ficheiro
+     * @param p
+     * @throws IOException
+     */
     public void appendPersonToFile(Vendedor p) throws IOException {
             Vendedor vendedor = p;
             GsonBuilder builder = new GsonBuilder();
@@ -45,6 +55,11 @@ public class Writter {
     }
 
 
+    /**
+     * Escrever no ficheiro um armazem escolhido
+     * @param local
+     * @throws IOException
+     */
     public void appendStorage(Armazem local) throws IOException {
         Armazem local1 = local;
         GsonBuilder builder = new GsonBuilder();
@@ -56,6 +71,11 @@ public class Writter {
         writer.close();
     }
 
+    /**
+     * Escrever um mercado escolhido no ficheiro
+     * @param local
+     * @throws IOException
+     */
     public void appendMarket(Mercado local) throws IOException {
         Mercado local1 = local;
         GsonBuilder builder = new GsonBuilder();

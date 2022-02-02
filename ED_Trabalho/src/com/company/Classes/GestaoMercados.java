@@ -15,6 +15,9 @@ public class GestaoMercados {
         this.writter = new Writter();
     }
 
+    /**
+     * Print dos mercados na network e seu index
+     */
     public void printMarkets() {
         Object[] locais = network.getVertices();
 
@@ -26,6 +29,9 @@ public class GestaoMercados {
         }
     }
 
+    /**
+     * Print dos mercados na network
+     */
     public void printMarketsToShow() {
         Object[] locais = network.getVertices();
         for (int i = 0; i < network.size(); i++) {
@@ -36,6 +42,9 @@ public class GestaoMercados {
         }
     }
 
+    /**
+     * Método para alterar mercado
+     */
     public void setMarket(){
         Object[] locais = network.getVertices();
         int choice, choice4 = 0, cliente, choice2;
@@ -88,6 +97,9 @@ public class GestaoMercados {
         }
     }
 
+    /**
+     * Método para adicionar mercado
+     */
     public void addMarket(){
         String name, tipo = "Mercado";
         int cliente;
@@ -116,6 +128,9 @@ public class GestaoMercados {
         network.addVertex(novoMercado);
     }
 
+    /**
+     * Menu de mercado
+     */
     public void AddOrSetMarkets() {
         int menu;
         System.out.println("1- Mudar Mercado");
@@ -148,6 +163,10 @@ public class GestaoMercados {
         }
     }
 
+    /**
+     * Export de um mercado escolhido
+     * @throws IOException
+     */
     public void exportMercado() throws IOException {
         int sellectMarket;
         Object[] locais = network.getVertices();

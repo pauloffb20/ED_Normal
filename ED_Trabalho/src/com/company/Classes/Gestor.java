@@ -14,6 +14,10 @@ public class Gestor {
 
     public Gestor() { }
 
+    /**
+     * Menu para escolha de vendedor
+     * @return choice1
+     */
     public Integer changeUser() {
         Scanner input = new Scanner(System.in);
         String choice1;
@@ -24,6 +28,9 @@ public class Gestor {
         return Integer.valueOf(choice1);
     }
 
+    /**
+     * Print dos vendedores e respetivo index
+     */
     public void printSellers(){
         int number = 0;
         for (int i= 0; i < vendedors.size(); i++){
@@ -32,12 +39,19 @@ public class Gestor {
         }
     }
 
+    /**
+     * Print da info dos vendedores
+     */
     public void printSellersToShow(){
         for (int i= 0; i < vendedors.size(); i++){
             System.out.println(vendedors.getIndex(i).toString());
         }
     }
 
+    /**
+     * Menu de alterar atributo do vendedor
+     * @return choice1
+     */
     public Integer changeAtribute() {
         Scanner input = new Scanner(System.in);
         String choice1;
@@ -51,6 +65,10 @@ public class Gestor {
         return Integer.valueOf(choice1);
     }
 
+    /**
+     * Alterar nome do user
+     * @return choice
+     */
     public String changeName() {
         Scanner input = new Scanner(System.in);
         String choice;
@@ -59,6 +77,10 @@ public class Gestor {
         return String.valueOf(choice);
     }
 
+    /**
+     * Alterar capacidade do vendedor
+     * @return choice
+     */
     public long changeCapacidade(){
         Scanner input = new Scanner(System.in);
         String choice;
@@ -68,6 +90,10 @@ public class Gestor {
     }
 
 
+    /**
+     * Atribuir lista de mercados a visitar ao vendedor
+     * @return mercados
+     */
     public ArrayUnorderedList<String> atribuirLista(){
       ArrayUnorderedList<String> mercados = new ArrayUnorderedList<>();
       int choice1;

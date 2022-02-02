@@ -17,6 +17,10 @@ public class GestaoCaminhos {
         this.localNetwork = network;
     }
 
+    /**
+     * Adicionar caminho á network
+     * @return caminho
+     */
     public Caminho addEdge() {
         int inicio, fim;
         double distancia;
@@ -44,6 +48,10 @@ public class GestaoCaminhos {
         return caminho;
     }
 
+    /**
+     * Remover caminho na network
+     * @return caminho
+     */
     public Caminho removeEdge(){
         int inicio, fim;
         Object[] objects = localNetwork.getVertices();
@@ -67,6 +75,12 @@ public class GestaoCaminhos {
     }
 
 
+    /**
+     * Menu de caminho
+     * @throws IOException
+     * @throws EmptyException
+     * @throws NotFoundException
+     */
     public void pathMenu() throws IOException, EmptyException, NotFoundException {
         int choice;
         System.out.println("Qual deseja fazer?");
@@ -95,6 +109,9 @@ public class GestaoCaminhos {
         }
     }
 
+    /**
+     * Print dos  vertices da network
+     */
     public void printVertices(){
         Object[] objects = localNetwork.getVertices();
         for (int i = 0; i < localNetwork.size(); i++) {

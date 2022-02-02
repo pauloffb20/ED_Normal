@@ -37,8 +37,11 @@ public class Menu {
             choice = initialMenu();
             switch (choice) {
                 case 1:
-                    isDocRead();
-                    gestaoEmpresa.readJson(docFileName);
+                    if(isDocRead()){
+                        gestaoEmpresa.readJson(docFileName);
+                    } else {
+                        System.out.println("Ficheiro já importado");
+                    }
                     break;
                 case 2:
                     System.out.println(gestaoEmpresa.toString());
@@ -63,6 +66,13 @@ public class Menu {
         }
     }
 
+    /**
+     * Verifica se o doc já foi lido
+     * @return true se foi lido e false se não foi
+     * @throws NoComparableException
+     * @throws IOException
+     * @throws EmptyCollectionException
+     */
     private boolean isDocRead() throws NoComparableException, IOException, EmptyCollectionException {
         boolean isread = false;
 
@@ -74,6 +84,10 @@ public class Menu {
         return isread;
     }
 
+    /**
+     * Método para ir á pasta Documents e dar a escolher ao user o doc a importar
+     * @return retorna o index na pasta ou "Not found"
+     */
     private String readDoc() {
         ArrayUnorderedList<String> results = new ArrayUnorderedList<>();
         int counter = 1;
@@ -99,6 +113,10 @@ public class Menu {
         return results.getIndex(mapFile - 1);
     }
 
+    /**
+     * Menu inicial
+     * @return valor da escolha (choice)
+     */
     public Integer initialMenu() {
         Scanner input = new Scanner(System.in);
         String choice;
@@ -115,6 +133,10 @@ public class Menu {
         return Integer.valueOf(choice);
     }
 
+    /**
+     * Printar grafo
+     * @throws EmptyException
+     */
     public void printGraph() throws EmptyException {
         Network<LocalX> network;
         network = gestaoEmpresa.getNetworkX();
@@ -124,6 +146,13 @@ public class Menu {
         }
     }
 
+    /**
+     * Menu de alterar dados
+     * @throws EmptyException
+     * @throws IOException
+     * @throws NotFoundException
+     * @throws NoComparableException
+     */
     public void alterarDados() throws EmptyException, IOException, NotFoundException, NoComparableException {
         int choice;
         System.out.println("Qual item quer alterar/adicionar?");
@@ -157,6 +186,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Menu da simulação
+     * @throws EmptyException
+     */
     public void menuSimulacao() throws EmptyException {
         int choice, choice2;
         System.out.println("Simulação de trajeto");
@@ -191,6 +224,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Menu dos exports
+     * @throws IOException
+     */
     public void exports() throws IOException {
         int choice;
         System.out.println("Qual item quer exportar?");
