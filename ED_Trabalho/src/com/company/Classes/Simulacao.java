@@ -192,7 +192,6 @@ public class Simulacao {
                 if (armazemfinal == null) {
                     return false;
                 }
-                LocalX path = paths.getIndex(index).getPaths().last();
                 int u = paths.getIndex(index).getPaths().size() - 1;
                 localNetwork.shortestPathWeight(paths.getIndex(index).getPaths().last(), armazemfinal, paths.getIndex(index).getPaths());
                 paths.getIndex(index).getPaths().removeByIndex(u);
@@ -271,7 +270,6 @@ public class Simulacao {
      */
     private void findPathToMercado(Vendedor vendedor,int index,int total) throws EmptyException {
         Mercado mercado = checkMercado(vendedor);
-        LocalX path = paths.getIndex(index).getPaths().last();
         int u = paths.getIndex(index).getPaths().size() - 1;
         localNetwork.shortestPathWeight(paths.getIndex(index).getPaths().last(), mercado, paths.getIndex(index).getPaths());
         paths.getIndex(index).getPaths().removeByIndex(u);
@@ -313,7 +311,6 @@ public class Simulacao {
         if (paths.getIndex(index).getPaths().size() != 0) {
             LocalX local = findLocalType("Sede");
             if (paths.getIndex(findIndex(vendedor)).getPaths().last() != local) {
-                LocalX path = paths.getIndex(index).getPaths().last();
                 int u = paths.getIndex(index).getPaths().size() - 1;
                 localNetwork.shortestPathWeight(paths.getIndex(index).getPaths().last(), local, paths.getIndex(index).getPaths());
                 paths.getIndex(index).getPaths().removeByIndex(u);

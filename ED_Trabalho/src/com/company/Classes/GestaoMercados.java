@@ -5,6 +5,7 @@ import com.company.Estruturas.ArrayUnorderedList;
 import com.company.Estruturas.Network;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GestaoMercados {
 
@@ -47,7 +48,8 @@ public class GestaoMercados {
      */
     public void setMarket(){
         Object[] locais = network.getVertices();
-        int choice, choice4 = 0, cliente, choice2;
+        ArrayUnorderedList<Integer> clientes;
+        int choice, choice4 = 0;
         String nome;
         printMarkets();
         System.out.println("Escolha o mercado a alterar:");
@@ -72,8 +74,32 @@ public class GestaoMercados {
                     choice4 = 3;
                     break;
                 case 2:
-                    ArrayUnorderedList<Integer> clientes = new ArrayUnorderedList<>();
+                    clientes = menuClient();
+                    mercado.setClientes(clientes);
+                    break;
+                default:
+                    return;
+            }
+        }
+    }
 
+    /**
+     * Menu para adicionar clientes manualmente ou automaticamente/aleatoriamente
+     * @return lista de clientes
+     */
+    private ArrayUnorderedList<Integer> menuClient(){
+        int choice4,choice2,cliente;
+        ArrayUnorderedList<Integer> clientes = new ArrayUnorderedList<>();
+        do{
+            System.out.println("Qual forma deseja adicionar clientes?");
+            System.out.println("1- Manual");
+            System.out.println("2- Automatico/aleatorio");
+            Scanner input5 = new Scanner(System.in);
+            choice4 = Integer.parseInt(input5.nextLine());
+
+
+            switch (choice4) {
+                case 1:
                     System.out.println("1- Adicionar cliente");
                     System.out.println("2- Não adicionar");
                     Scanner input7 = new Scanner(System.in);
@@ -88,41 +114,32 @@ public class GestaoMercados {
                         System.out.println("Não adicionar - 2");
                         choice2 = input7.nextInt();
                     }
-
-                    mercado.setClientes(clientes);
-                    break;
+                    return clientes;
+                case 2:
+                    int randomNum = ThreadLocalRandom.current().nextInt(0, 10);
+                    for (int i =0; i<randomNum;i++){
+                        int randomNum2 = ThreadLocalRandom.current().nextInt(0, 100);
+                        clientes.addToRear(randomNum2);
+                    }
+                    return clientes;
                 default:
-                    return;
+                    System.out.println("imput invalido");
             }
-        }
+        }while (true);
     }
+
 
     /**
      * Método para adicionar mercado
      */
     public void addMarket(){
         String name, tipo = "Mercado";
-        int cliente;
-        ArrayUnorderedList<Integer> clientes = new ArrayUnorderedList<>();
+        ArrayUnorderedList<Integer> clientes;
 
         System.out.println("Nome:");
         Scanner input4 = new Scanner(System.in);
         name = String.valueOf(input4.nextLine());
-
-        System.out.println("1- Adicionar cliente");
-        System.out.println("2- Não adicionar");
-        Scanner input5 = new Scanner(System.in);
-        int choice = input5.nextInt();
-
-        while(choice != 2){
-            System.out.println("Cliente:");
-            Scanner input1 = new Scanner(System.in);
-            cliente = Integer.parseInt(input1.nextLine());
-            clientes.addToRear(cliente);
-            System.out.println("Adicionar cliente - 1");
-            System.out.println("Não adicionar - 2");
-            choice = input5.nextInt();
-        }
+        clientes = menuClient();
 
         Mercado novoMercado = new Mercado(name, tipo, clientes);
         network.addVertex(novoMercado);

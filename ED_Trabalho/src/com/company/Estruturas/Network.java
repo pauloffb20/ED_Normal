@@ -313,7 +313,7 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
         pathsList.addToFront(new Prioridade<>(initialPair, 0));
 
         while (!pathsList.isEmpty()) {
-            MinCostPair currentPair = removeMin(pathsList);
+            MinCostPair currentPair = removeMin(pathsList,destVertex);
             int currentVertex = currentPair.getIndex();
             double minCostCurrent = currentPair.getCost();
             visited.addToRear(currentVertex);
@@ -340,12 +340,13 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
         return -1;
     }
 
-    private MinCostPair removeMin(ArrayUnorderedList<Prioridade<MinCostPair>> pathsList) throws EmptyException {
-        int index = 0,prioridade = -1;
+    private MinCostPair removeMin(ArrayUnorderedList<Prioridade<MinCostPair>> pathsList,int destVertex) throws EmptyException {
+        int index = 0;
         for(int i = 1;i < pathsList.size();i++){
-            if(prioridade == -1){
-                index = i;
-            }else if(pathsList.getIndex(index).getPrioridade() > pathsList.getIndex(i).getPrioridade()){
+            if(pathsList.getIndex(i).getObject() == this.getVertices()[destVertex]) {
+                return pathsList.getIndex(i).getObject();
+            }
+            if(pathsList.getIndex(index).getPrioridade() > pathsList.getIndex(i).getPrioridade()){
                 index = i;
             }
         }

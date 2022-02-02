@@ -155,35 +155,33 @@ public class Menu {
      */
     public void alterarDados() throws EmptyException, IOException, NotFoundException, NoComparableException {
         int choice;
-        System.out.println("Qual item quer alterar/adicionar?");
-        System.out.println("1- Caminhos");
-        System.out.println("2- Vendedores");
-        System.out.println("3- Armazéns");
-        System.out.println("4- Mercados");
-        Scanner input = new Scanner(System.in);
-        choice = Integer.parseInt(input.next());
-        while (choice != 5) {
+
+        do {
+            System.out.println("Qual item quer alterar/adicionar?");
+            System.out.println("1- Caminhos");
+            System.out.println("2- Vendedores");
+            System.out.println("3- Armazéns");
+            System.out.println("4- Mercados");
+            System.out.println("5- Exit");
+            Scanner input = new Scanner(System.in);
+            choice = Integer.parseInt(input.next());
             switch (choice) {
                 case 1:
                     gestaoCaminhos.pathMenu();
-                    choice = 5;
                     break;
                 case 2:
                     gestaoVendedores.sellerMenu();
-                    choice = 5;
                     break;
                 case 3:
                     gestaoEmpresa.AddOrSetStorage();
-                    choice = 5;
                     break;
                 case 4:
                     gestaoEmpresa.AddOrSetMarkets();
-                    choice = 5;
                     break;
                 default:
                     return;
             }
-        }
+        }while (choice != 5);
     }
 
     /**
