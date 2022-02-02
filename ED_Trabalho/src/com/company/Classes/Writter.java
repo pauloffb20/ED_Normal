@@ -1,11 +1,11 @@
 package com.company.Classes;
-import com.company.Models.Armazem;
-import com.company.Models.Mercado;
-import com.company.Models.Vendedor;
+import com.company.Estruturas.ArrayUnorderedList;
+import com.company.Models.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
 
 public class Writter {
     Gson gson = new Gson();
@@ -21,19 +21,32 @@ public class Writter {
         this.gestor = new Gestor(gestaoEmpresa.getVendedors());
     }
 
+    private class ExportEnterprise{
+
+         private ArrayUnorderedList<Vendedor> vendedores;
+         private Object[] locais;
+         private ArrayUnorderedList<Caminho> caminhos;
+
+        public ExportEnterprise(ArrayUnorderedList<Vendedor> vendedores, Object[] locais, ArrayUnorderedList<Caminho> caminhos) {
+            this.vendedores = vendedores;
+            this.locais = locais;
+            this.caminhos = caminhos;
+        }
+    }
+
     /**
      * Escrever no ficheiro o dados da empresa
      * @param p
      * @throws IOException
      */
     public void appendEnterprise(GestaoEmpresa p) throws IOException {
-        GestaoEmpresa gestaoEmpresa = p;
-        String s = gestaoEmpresa.toString();
+        Object[] locais = p.getNetworkX().getVertices();
+        ExportEnterprise exportEnterprise = new ExportEnterprise(p.getVendedors(), locais, p.getPaths());
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         Gson gson = builder.create();
         FileWriter writer = new FileWriter(this.enterprise);
-        gson.toJson(s, writer);
+        gson.toJson(exportEnterprise, writer);
         writer.flush();
         writer.close();
     }

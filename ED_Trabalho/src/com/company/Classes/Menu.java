@@ -238,7 +238,7 @@ public class Menu {
         while (choice != 5) {
             switch (choice) {
                 case 1:
-                    gestaoEmpresa.exportEnterprise(gestaoEmpresa);
+                    gestaoEmpresa.exportEnterprise();
                     choice = 5;
                     break;
                 case 2:

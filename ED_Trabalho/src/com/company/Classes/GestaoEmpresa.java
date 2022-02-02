@@ -12,7 +12,6 @@ import java.util.Scanner;
 
 public class GestaoEmpresa {
     private ArrayUnorderedList<Vendedor> vendedores;
-    //private ArrayUnorderedList<Local> locais;
     private ArrayUnorderedList<Caminho> paths;
     private Gestor gestor;
     private Network<LocalX> networkX;
@@ -21,7 +20,6 @@ public class GestaoEmpresa {
 
     public GestaoEmpresa() {
         this.vendedores = new ArrayUnorderedList<>();
-        //this.locais = new ArrayUnorderedList<>();
         this.paths = new ArrayUnorderedList<>();
         this.networkX = new Network<>();
         this.gestor = new Gestor(vendedores);
@@ -34,7 +32,7 @@ public class GestaoEmpresa {
      * @param m
      * @throws NoComparableException
      */
-    public void addVendedor(Vendedor m) throws NoComparableException {
+    public void addVendedor(Vendedor m) {
         this.vendedores.addToRear(m); }
 
     /**
@@ -46,14 +44,17 @@ public class GestaoEmpresa {
     }
 
     /**
-     * Export da empresa
-     * @param gestaoEmpresa
+     * Método de exportar a empresa
      * @throws IOException
      */
-    public void exportEnterprise(GestaoEmpresa gestaoEmpresa) throws IOException {
-        GestaoEmpresa gestaoEmpresa1 = gestaoEmpresa;
-        writter.appendEnterprise(gestaoEmpresa1);
+    public void exportEnterprise() throws IOException {
+        writter.appendEnterprise(this);
     }
+
+    /**
+     * Método para obter a lista de caminhos
+     * @return paths
+     */
     public ArrayUnorderedList<Caminho> getPaths() {
         return paths;
     }
@@ -196,7 +197,6 @@ public class GestaoEmpresa {
         for (Caminho caminho: paths) {
             s += "\n" + caminho.toString() + "\n";
         }
-
         return s;
     }
 

@@ -1,0 +1,13 @@
+{
+  "clientes": {
+    "list": [
+      40,
+      50,
+      25,
+      20,
+      80
+    ]
+  },
+  "local_name": "Mercado 1",
+  "type": "Mercado"
+}
