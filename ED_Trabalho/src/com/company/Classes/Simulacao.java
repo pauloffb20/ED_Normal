@@ -75,7 +75,7 @@ public class Simulacao {
     /**
      * Encontrar o vendedor na lista de paths
      * @param vendedor
-     * @return
+     * @return i ou -1
      */
     private int findIndex(Vendedor vendedor) {
         for (int i = 0; i < paths.size(); i++) {
@@ -100,7 +100,7 @@ public class Simulacao {
     /**
      * Encontrar a posição do local
      * @param local
-     * @return
+     * @return i ou -1
      */
     private int findIndexLocal(LocalX local) {
         Object[] locais = localNetwork.getVertices();
@@ -115,7 +115,7 @@ public class Simulacao {
     /**
      * Encontrar o local pelo tipo
      * @param tipo
-     * @return
+     * @return local ou null
      */
     private LocalX findLocalType(String tipo) {
         Object[] locais = localNetwork.getVertices();
@@ -131,7 +131,7 @@ public class Simulacao {
     /**
      * Calcular quanto stock ele precisa para atender os clientes
      * @param vendedor
-     * @return
+     * @return total ou 0
      */
     private int calculateClientNeeds(Vendedor vendedor) {
         Mercado mercado = checkMercado(vendedor);
@@ -181,7 +181,7 @@ public class Simulacao {
      * Encontrar o melhor caminho para o armazém correto e colocar na lista
      * @param total
      * @param index
-     * @return
+     * @return true or false
      * @throws EmptyException
      */
     private boolean findPathToArmazem(int total, int index) throws EmptyException {

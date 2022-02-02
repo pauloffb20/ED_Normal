@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class GestaoEmpresa<T> {
+public class GestaoEmpresa {
     private ArrayUnorderedList<Vendedor> vendedores;
     //private ArrayUnorderedList<Local> locais;
     private ArrayUnorderedList<Caminho> paths;
@@ -204,8 +204,8 @@ public class GestaoEmpresa<T> {
      * Método para chamar o menu de armazem
      */
     public void AddOrSetStorage() {
-        GestãoArmazem gestãoArmazem = new GestãoArmazem(networkX);
-        gestãoArmazem.AddOrSetStorage();
+        GestaoArmazem gestaoArmazem = new GestaoArmazem(networkX);
+        gestaoArmazem.AddOrSetStorage();
     }
 
     /**
@@ -228,8 +228,8 @@ public class GestaoEmpresa<T> {
      * Método para print dos armazens
      */
     public void printStorages(){
-        GestãoArmazem gestãoArmazem = new GestãoArmazem(networkX);
-        gestãoArmazem.printStoragesToShow();
+        GestaoArmazem gestaoArmazem = new GestaoArmazem(networkX);
+        gestaoArmazem.printStoragesToShow();
     }
 
     /**

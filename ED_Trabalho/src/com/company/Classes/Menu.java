@@ -14,7 +14,7 @@ public class Menu {
     private Gestor gestor;
     private Writter writter;
     private GestaoVendedores gestaoVendedores;
-    private GestãoArmazem gestãoArmazem;
+    private GestaoArmazem gestaoArmazem;
     private GestaoMercados gestaoMercados;
     private GestaoCaminhos gestaoCaminhos;
     private Simulacao simulacao;
@@ -24,7 +24,7 @@ public class Menu {
         this.gestor = new Gestor(gestaoEmpresa.getVendedors());
         this.writter = new Writter(gestaoEmpresa);
         this.gestaoVendedores = new GestaoVendedores(gestaoEmpresa);
-        this.gestãoArmazem = new GestãoArmazem(gestaoEmpresa.getNetworkX());
+        this.gestaoArmazem = new GestaoArmazem(gestaoEmpresa.getNetworkX());
         this.gestaoMercados = new GestaoMercados(gestaoEmpresa.getNetworkX());
         this.gestaoCaminhos = new GestaoCaminhos(gestaoEmpresa);
         this.simulacao = new Simulacao(gestaoEmpresa.getNetworkX());
@@ -248,7 +248,7 @@ public class Menu {
                     choice = 5;
                     break;
                 case 3:
-                    gestãoArmazem.exportArmazem();
+                    gestaoArmazem.exportArmazem();
                     choice = 5;
                     break;
                 case 4:
